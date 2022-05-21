@@ -18,6 +18,7 @@ const constructUrl = (path) => {
   )}`;
 };
 
+
 // You may need to add to this function, definitely don't delete it.
 const movieDetails = async (movie) => {
   const movieRes = await fetchMovie(movie.id);
@@ -28,6 +29,7 @@ const movieDetails = async (movie) => {
 const fetchMovies = async () => {
   const url = constructUrl(`movie/now_playing`);
   const res = await fetch(url);
+  console.log(res);
   return res.json();
 };
 
@@ -79,3 +81,8 @@ const renderMovie = (movie) => {
 };
 
 document.addEventListener("DOMContentLoaded", autorun);
+
+
+// https://api.themoviedb.org/3/genre/movie/list?api_key=542003918769df50083a13c415bbc602&language=en-US
+// https://api.themoviedb.org/3/movie/now_playing?api_key=542003918769df50083a13c415bbc602
+// https://api.themoviedb.org/4/list/{list_id}?page=1&api_key=542003918769df50083a13c415bbc602
