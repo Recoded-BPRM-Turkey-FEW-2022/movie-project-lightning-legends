@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const PROFILE_BASE_URL = "http://image.tmdb.org/t/p/w185";
@@ -17,7 +17,6 @@ const constructUrl = (path) => {
     "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI="
   )}`;
 };
-
 
 // You may need to add to this function, definitely don't delete it.
 const movieDetails = async (movie) => {
@@ -82,3 +81,30 @@ const renderMovie = (movie) => {
 
 document.addEventListener("DOMContentLoaded", autorun);
 
+// Search box starts here
+const searchBox = document.getElementById("searchBox");
+const searchBtn = document.getElementById("searchBtn");
+let searchReasultsDiv = document.createElement("div");
+const searching = async (event) => {
+  event.preventDefault();
+  let searchBoxValue = searchBox.value;
+  let fechedMoviesobj = await fetchMovies(); // this is like a main object it has keys and some of the keys has array.
+  let moviesArr = fechedMoviesobj.results; // shows the result part of our main object and it is an array of objects each object has movie info
+  for (let i = 0; i < moviesArr.length; i++) {
+    if (
+      searchBoxValue.toLowerCase() ==
+      moviesArr[i]["original_title"].toLowerCase()
+    ) {
+      renderMovie(moviesArr[i]);
+      movieDetails(moviesArr[i]);
+      break;
+    } else if (
+      searchBoxValue.toLowerCase() !==
+      moviesArr[i]["original_title"].toLowerCase()
+    ) {
+      CONTAINER.innerHTML = "we couldn find what you are looking for";
+    }
+  }
+};
+searchBtn.addEventListener("click", searching);
+// Search box ends here
