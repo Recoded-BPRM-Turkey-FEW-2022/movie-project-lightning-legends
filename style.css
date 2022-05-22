@@ -1,11 +1,37 @@
+
 #movie-backdrop {
     width: 100%;
 }
 
+img{
+    max-width: 100%;
+}
+
 .container {
     padding-top: 32px;
+    display: grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    grid-auto-rows:auto;
+    gap: 1rem;
 }
 
 #actors {
     margin: 24px 16px 0 0;
+}
+
+div.dropdown-multicol2{
+    width: 30em;
+}
+
+div.dropdown-multicol2>div.dropdown-col{
+display:inline-block;
+width: 32%;
+}
+
+.container div {
+    border: 10px;
+}
+
+.container div img{
+    border-radius: 10px;
 }
