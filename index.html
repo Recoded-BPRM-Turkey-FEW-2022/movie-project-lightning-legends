@@ -11,13 +11,12 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">MOVIES</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -25,6 +24,42 @@
         </li>
         <li class="nav-item  d-flex align-content-center justify-content-center" id='actors'>
           <a class="nav-link" href="#">Actors</a>
+        </li>
+        <li class="nav-item">
+          <!-- COLUMNS -->
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              MOVIES
+            </button>
+            <div class="dropdown-menu dropdown-multicol2" aria-labelledby="dropdownMenuButton">
+              <div class="dropdown-col">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Adventure</a>
+                <a class="dropdown-item" href="#">Animation</a>
+                <a class="dropdown-item" href="#">History</a>
+                <a class="dropdown-item" href="#">Horror</a>
+                <a class="dropdown-item" href="#">TV Movie</a>
+              </div>
+              <div class="dropdown-col">
+                <a class="dropdown-item" href="#">Comedy</a>
+                <a class="dropdown-item" href="#">Crime</a>
+                <a class="dropdown-item" href="#">Documentary</a>
+                <a class="dropdown-item" href="#">Music</a>
+                <a class="dropdown-item" href="#">Mystery</a>
+                <a class="dropdown-item" href="#">Thriller</a>
+              </div>
+              <div class="dropdown-col">
+                <a class="dropdown-item" href="#">Drama</a>
+                <a class="dropdown-item" href="#">Family</a>
+                <a class="dropdown-item" href="#">Fantasy</a>
+                <a class="dropdown-item" href="#">Romance</a>
+                <a class="dropdown-item" href="#">Science Fiction</a>
+                <a class="dropdown-item" href="#">War</a>
+              </div>
+            </div>
+          </div>
+          <!-- COLUMNS END-->
         </li>
         <li class="nav-item  d-flex align-content-center justify-content-center" id='actors'>
           <a class="nav-link" href="#" id="aboutUs">About Us</a>
@@ -36,31 +71,12 @@
       </form>
     </div>
   </nav>
-
   <div class="container">
     <div class="row actorsRow">
     </div>
   </div>
-  </div>
-
-  <!-- <div class="container cardsContainer d-flex justify-content-center">
-    <div class="row d-flex flex-wrap justify-content-center">
-      <div class="col">
-        <div class="card shadow-lg m-3" style="width: 15rem;">
-          <img class="card-img-top" src="./imgg.jpeg" alt="Card image cap">
-          <p class="text-dark mb-0 pl-2 ">
-            <a><strong>My name</strong></a>
-          </p>
-          <p class="card-text pl-2 text-muted">Some quick example text to build on...</p>
-        </div>
-      </div>
-  </div> -->
-      
-
-
-
+  
   <footer>
-
   </footer>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
