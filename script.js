@@ -187,41 +187,8 @@ document.addEventListener("DOMContentLoaded", autorun);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // https://api.themoviedb.org/3/movie/{movie_id}?api_key=542003918769df50083a13c415bbc602&language=en-US
 // https://api.themoviedb.org/3/genre/movie/list?api_key=542003918769df50083a13c415bbc602&language=en-US
 // https://api.themoviedb.org/3/movie/now_playing?api_key=542003918769df50083a13c415bbc602
 // https://api.themoviedb.org/4/list/{list_id}?page=1&api_key=542003918769df50083a13c415bbc602
+
