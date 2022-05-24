@@ -29,7 +29,7 @@ const movieDetails = async (movie) => {
 const fetchMovies = async () => {
   const url = constructUrl(`movie/now_playing`); //person/{person_id} //movie/now_playing
   const res = await fetch(url);
-  return res.json(); // shows a lsit of now playing movis
+  return res.json(); // shows a listt of now playing movis
 };
 
 // Don't touch this function please. This function is to fetch one movie.
@@ -41,17 +41,21 @@ const fetchMovie = async (movieId) => {
 
 // You'll need to play with this function in order to add features and enhance the style.
 const renderMovies = (movies) => {
+  let divIndex = 0;
   movies.map((movie) => {
     const movieDiv = document.createElement("div");
+    movieDiv.setAttribute("class", `${divIndex}`);
+    divIndex++;
     movieDiv.innerHTML = `
-        <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
+          <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
       movie.title
     } poster">
-        <h3>${movie.title}</h3>`;
+          <h3>${movie.title}</h3>`;
     movieDiv.addEventListener("click", () => {
       movieDetails(movie);
     });
     CONTAINER.appendChild(movieDiv);
+    onlyeOnce = true;
   });
 };
 
@@ -78,7 +82,85 @@ const renderMovie = (movie) => {
             <ul id="actors" class="list-unstyled"></ul>
     </div>`;
 };
+// movies section Codes
+const ddlists = document.querySelectorAll(".dropdown-item");
+ddlists.forEach((element) => {
+  addEventClick(element);
+});
 
+let gId = "";
+// adding click event to the list's tags
+function addEventClick(element) {
+  element.addEventListener("click", async () => {
+    const res = await getMoviesGeners();
+    // getting the Id genre of the pressed tag
+    res.forEach(async (elementGenre) => {
+      if (elementGenre.name === element.innerHTML) {
+        const results = await fetchMoviesSimilar(elementGenre.id);
+        CONTAINER.innerHTML = " ";
+        renderMovies(results.results);
+        gId = elementGenre.id;
+        console.log(gId);
+        console.log(results.results);
+      }
+    });
+  });
+}
+
+// ==============================
+// This function is to fetch Genres
+const fetchMoviesGenre = async () => {
+  const urlMoviesList = constructUrl(`genre/movie/list`);
+  const resMoviesList = await fetch(urlMoviesList);
+  return resMoviesList.json();
+};
+
+// this function get movies depend on the genere
+const getMoviesGeners = async () => {
+  const res = await fetchMoviesGenre();
+  return res.genres;
+};
+
+// This function is to fetch simirlar Movie depend on the Id
+const fetchMoviesSimilar = async (genreId) => {
+  const url = constructUrl(`movie/${genreId}/similar`);
+  const res = await fetch(url);
+  return res.json();
+};
+
+//==================
+const fetchMoviesSimilarNewPAge = async (genreId, pageNumber) => {
+  const url = constructUrlNewPage(`movie/${genreId}/similar`, pageNumber);
+  console.log(url);
+  const res = await fetch(url);
+  return res.json();
+};
+
+const constructUrlNewPage = (path, pageNumber) => {
+  return `${TMDB_BASE_URL}/${path}?api_key=${atob(
+    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI"
+  )}&page=${pageNumber}
+  )}`;
+};
+
+let x = 1;
+let onlyeOnce = true;
+// event when reaching the bootom
+document.addEventListener("scroll", () => {
+  if (
+    window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 1 &&
+    onlyeOnce
+  ) {
+    x++;
+    onlyeOnce = false;
+    // console.log(fetchMoviesSimilarNewPAge(gId,2))
+    (async () => {
+      const v = await fetchMoviesSimilarNewPAge(gId, x);
+      renderMovies(v.results);
+    })();
+  }
+});
+//mayce's code starts here
 document.addEventListener("DOMContentLoaded", autorun);
 // Actros list page starts here
 const actorsBtn = document.getElementById("actors");
@@ -87,9 +169,7 @@ const fetchActors = async () => {
   const res = await fetch(url);
   return res.json(); // shows a lsit of popular people
 };
-const actorCardsDiv = document.createElement("div");
-actorCardsDiv.classList.add("row");
-actorCardsDiv.classList.add("justify-content-center");
+let actorsListContainer = document.createElement('div')
 const renderingActors = (actor) => {
   let known_forArr = [];
   for (let item of actor["known_for"]) {
@@ -101,8 +181,11 @@ const renderingActors = (actor) => {
   }
   let splitedArr = known_forArr.join(", ");
   let slicedKnownforArr = splitedArr.slice(0, 30) + "...";
+  const actorCardsDiv = document.createElement("div");
+  // actorCardsDiv.classList.add("row");
+  actorCardsDiv.classList.add("mayce");
+  actorCardsDiv.classList.add("justify-content-center");
   actorCardsDiv.innerHTML += `
-    <div class="row d-flex flex-wrap justify-content-center">
       <div class="col">
         <div class="card shadow-lg d-flex align-items-center m-3" style="width: 15rem;">
           <img class="card-img-top" src="${
@@ -131,10 +214,10 @@ const addingActors = async () => {
 };
 actorsBtn.addEventListener("click", addingActors);
 //  Actros list page ends here
-
 // Actors single page starts here
 const actorDetails = async (actor) => {
   const actorRes = await fetchActor(actor.id);
+  console.log(actorRes);
   renderActor(actorRes);
 };
 const fetchActor = async (personId) => {
@@ -147,55 +230,65 @@ const renderActor = (actor) => {
   for (let item in actor["also_known_as"]) {
     alsoKnownAsArr.push(item);
   }
-  console.log(alsoKnownAsArr);
   let slicedKnownforArr = alsoKnownAsArr.slice(0, 5) + "...";
   CONTAINER.innerHTML = `
+  <div class="container d-flex flex-column">
   <div class="row">
-      <div class="col-md-4">
-        <img class="card-img-top" src="${
-          actor.profile_path
-            ? BACKDROP_BASE_URL + actor.profile_path
-            : "https://via.placeholder.com/350"
-        }" alt="Card image cap">
-      </div>
-      <div class="col-md-8">
-      <h2 id="title">${actor.name}</h2>
-        <section class="full_wrapper">
-          <h3 dir="auto">Biography</h3>
-          <div dir="auto" class="biography true">
-              <div class="content fade_text">
-                <div class="text initial">
-                  <p>${actor.biography}</p>
-                </div>
-          </div>
-        </section>
-        <section class="full_wrapper">
-          <div id='known_for'>
-          <h3 dir="auto">known_for</h3>
-            <div id='known_for_scroller' class='scroller_wrap'>
-            ${slicedKnownforArr}
-            </div>
-          </div>
-        </section>
-        <section class="full_wrapper">
-          <div id='personalInfo'>
-           <h4 dir="auto">Personal Information:</h4>
-            </div>
-          </div>
-        </section>
-        <section class="full_wrapper">
-          <p><strong>Gender</strong><br> ${
-            actor["gender"] ? "Female" : "Man"
-          }</p>
-          <p><strong>Known Credits</strong><br> ${actor["birthday"]}</p>  
-          <p><strong>popularity</strong><br> ${actor["popularity"]}</p>        
-        </section>`;
-};
-// Actors single page endss here
+    <div class="col-md-4">
+      <img src="${
+        actor.profile_path
+          ? BACKDROP_BASE_URL + actor.profile_path
+          : "https://via.placeholder.com/350"
+      }" alt="Card image cap">
+    </div>
+    <div class="col-6 col-md-8">
+      <strong>
+        <h1>${actor.name}</h1>
+      </strong>
+      <br>
+      <strong>
+        <h5>Biography</h5>
+      </strong>
+      <p>${actor.biography}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <strong>
+        <h4>Personal Info</h4>
+      </strong>
+      <h5 class="actorH5">gender</h5>
+      <p>${
+        actor["gender"] === 1 ? "Female" : "Man"
+      }</p>
 
+      <h5>birthday</h5>
+      <p>${actor["birthday"]}</p>
+
+      <h5>popularity</h5>
+      <p>${actor["popularity"]}</p>
+    </div>
+    <div class="col-8">
+    ${slicedKnownforArr}
+    </div>
+  </div>
+</div>`;
+};
+// when page loads fetch known for movies by there name from the array
+/**
+ actor.knownfor will show us an array of the names of the movies
+then we can loop throw our movies api and check for each movie 
+if our name equalss the movies name push it to ann array
+we will have an array of objects 
+then return movies.picture 
+render it in the small box with a clcik event
+*/
+
+// Actors single page endss here
 // About us page starts here
 const aboutUsBtn = document.getElementById("aboutUs");
 const openAboutUsPage = () => {
+  CONTAINER.innerHTML = " ";
   CONTAINER.innerHTML = `
       <div class='container aboutUsContainer d-flex justify-content-center flex-column align-items-center'>
        <div> 
@@ -235,7 +328,6 @@ const openAboutUsPage = () => {
 };
 aboutUsBtn.addEventListener("click", openAboutUsPage);
 // About us page endss here
-
 // Search box starts here
 const searchBox = document.getElementById("searchBox");
 const searchBtn = document.getElementById("searchBtn");
@@ -273,3 +365,4 @@ const homePage = async () => {
 };
 homePageBtn.addEventListener("click", homePage);
 //HomePage endss here
+//mayce's code ends here
