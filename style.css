@@ -1,4 +1,4 @@
-/* #movie-backdrop {
+/* /* #movie-backdrop {
   width: 100%;
 }
 
@@ -134,7 +134,7 @@ body {
 }
 
 .col {
-   flex-grow: 0 !important;
+  flex-grow: 0 !important;
 }
 .card-img-top {
   width: 240px;
@@ -186,5 +186,15 @@ div.dropdown-multicol2 > div.dropdown-col {
 }
 
 h5 {
-    margin: 0;
+  margin: 0;
+}
+.hithereh2 {
+  height: 233px;
+  line-height: 233px;
+  font-family: "Shrikhand", cursive;
+  font-size: 10em;
+  font-weight: 400;
+  position: relative;
+  top: 0;
+  left: 0;
 }
