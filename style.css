@@ -23,8 +23,7 @@ img {
 }
 
 nav a {
-  background-color: #a8cec4 !important;
-  color: rgb(3, 2, 2) !important;
+  color: rgb(255, 255, 255) !important;
 }
 
 body {
@@ -206,42 +205,23 @@ h5 {
   color: #fff;
 }
 .undraw {
-    position: relative;
-    top: 0;
-    left:0;
-    margin-top: -250px;
-    outline: none;
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-top: -250px;
+  outline: none;
 }
 
-/* .undraw {
-  /* background-image: url("./undraw.svg");
-  height: 380px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  z-index: 1; */
-
-/* .undraw h2 {
+.footerContainer {
+  width: 100%;
+  color:#898b96;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 380px;
-  position: relative;
-  top: 40px;
-  font-size: 3em;
-  color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.5);
-} */
-/* 
-.undraw {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 22;
+  background: rgb(10, 21, 37);
+  background: rgb(68, 17, 47);
+  background: linear-gradient(
+    0deg,
+    rgba(68, 17, 47, 1) 30%,
+    rgba(10, 21, 37, 1) 100%
+  );
 }
-.hithereh2 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 3;
-} */
