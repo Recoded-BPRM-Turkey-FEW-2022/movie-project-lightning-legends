@@ -221,7 +221,6 @@ const actorDetails = async (actor) => {
   known_for(actor);
 };
 function known_for(actor) {
-  // let sliderContainer = document.getElementById('sliderContainer')
   for (let i = 0; i < actor["known_for"].length; i++) {
     sliderContainer.innerHTML += `
     <div class="col p-0 m-0">
@@ -289,48 +288,60 @@ const aboutUsBtn = document.getElementById("aboutUs");
 const openAboutUsPage = () => {
   CONTAINER.innerHTML = " ";
   CONTAINER.innerHTML = `
-      <div class='container aboutUsContainer d-flex justify-content-center flex-column align-items-center'>
-       <div> 
-         <h2>hi there</h2>
-       </div>
-       <h1>Let's talk about OurMovies</h1>
-       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-       <div classe='advantegesContainer container'> 
-         <div class='row d-flex justify-content-center'>
-           <h2>The TMDB Advantage</h2>
-         </div>
-         <div class='row'>
-           <div>
-             <div class='number'>1</div>
-           </div>
-           <div class='col'>
-             <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-           </div>
-         </div>
-         <div class='row'>
-           <div>
-             <div class='number'>2</div>
-           </div>
-           <div class='col'>
-             <p class='advantegesp'>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-           </div>
-         </div>
-         <div class='row'>
-           <div>
-             <div class='number'>3</div>
-           </div>
-           <div class='col'>
-             <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-           </div>
-         </div>
-       </div>`;
+  <div class='container aboutUsContainer d-flex justify-content-center flex-column align-items-center'>
+    <div class='undrawContainer'>
+      <h2 class="hithereh2">Hi there,</h2>
+      <img class='undraw' src='./undraw.svg'>
+    </div>
+    <div>
+      <h1>Let's talk about OurMovies</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+    <div classe='advantegesContainer container'>
+      <div class='row d-flex justify-content-center pb-2 '>
+        <h2>The TMDB Advantage</h2>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 number">
+          1
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 number">
+          2
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 number">
+          3
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
 };
 aboutUsBtn.addEventListener("click", openAboutUsPage);
 // About us page endss here
 // Search box starts here
 const searchBox = document.getElementById("searchBox");
 const searchBtn = document.getElementById("searchBtn");
-
 const searching = async (event) => {
   event.preventDefault();
   let searchBoxValue = searchBox.value;

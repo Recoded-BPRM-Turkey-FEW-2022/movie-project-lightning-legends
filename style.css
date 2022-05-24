@@ -1,4 +1,4 @@
-/* /* #movie-backdrop {
+#movie-backdrop {
   width: 100%;
 }
 
@@ -14,17 +14,26 @@ img {
   gap: 1rem;
 }
 
+.conatainer {
+  color: #fff;
+}
+
 #actors {
   margin: 24px 16px 0 0;
 }
 
 nav a {
-  /* background-color:#a8cec4 !important; */
-/* color: rgb(3, 2, 2) !important;
+  background-color: #a8cec4 !important;
+  color: rgb(3, 2, 2) !important;
 }
 
 body {
-  background-color: #062d409e;
+  background: rgb(10, 21, 37);
+  background: linear-gradient(
+    0deg,
+    rgba(10, 21, 37, 1) 66%,
+    rgba(68, 17, 47, 1) 100%
+  );
   color: white;
 }
 
@@ -81,16 +90,14 @@ body {
   height: 240px;
 }
 
-
 .container div {
   border: 10px;
 }
 
 .container div img {
   border-radius: 10px;
-} */
+}
 .aboutUsContainer {
-  color: rgb(22, 18, 18);
   padding: 20px 0 70px 0;
   width: 800px;
   margin: 0 auto;
@@ -103,7 +110,6 @@ body {
 }
 
 .advantegesp {
-  color: rgb(0, 0, 0);
   text-align: left;
   margin: 0;
 }
@@ -197,4 +203,45 @@ h5 {
   position: relative;
   top: 0;
   left: 0;
+  color: #fff;
 }
+.undraw {
+    position: relative;
+    top: 0;
+    left:0;
+    margin-top: -250px;
+    outline: none;
+}
+
+/* .undraw {
+  /* background-image: url("./undraw.svg");
+  height: 380px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  z-index: 1; */
+
+/* .undraw h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 380px;
+  position: relative;
+  top: 40px;
+  font-size: 3em;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5);
+} */
+/* 
+.undraw {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 22;
+}
+.hithereh2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+} */
