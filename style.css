@@ -22,11 +22,6 @@ img {
   margin: 24px 16px 0 0;
 }
 
-nav a {
-  background-color: #a8cec4 !important;
-  color: rgb(3, 2, 2) !important;
-}
-
 body {
   background: rgb(10, 21, 37);
   background: linear-gradient(
@@ -213,6 +208,10 @@ h5 {
     outline: none;
 }
 
+nav a {
+  color: white;
+}
+
 #searchBox {
   background: transparent;
   border-color: #d27373;
@@ -224,7 +223,7 @@ h5 {
    background-color: #d27373;
    border-color: #d26767;
  }
- 
+
  .btn-outline-success {
    color: #d27373;
    border-color: #d27373;
