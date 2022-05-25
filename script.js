@@ -131,7 +131,6 @@ const fetchMoviesSimilar = async (genreId) => {
 //==================
 const fetchMoviesSimilarNewPAge = async (genreId, pageNumber) => {
   const url = constructUrlNewPage(`movie/${genreId}/similar`, pageNumber);
-  console.log(url);
   const res = await fetch(url);
   return res.json();
 };
@@ -169,7 +168,7 @@ const fetchActors = async () => {
   const res = await fetch(url);
   return res.json(); // shows a lsit of popular people
 };
-let actorsListContainer = document.createElement('div')
+let actorsListContainer = document.createElement("div");
 const renderingActors = (actor) => {
   let known_forArr = [];
   for (let item of actor["known_for"]) {
@@ -214,23 +213,45 @@ const addingActors = async () => {
 };
 actorsBtn.addEventListener("click", addingActors);
 //  Actros list page ends here
+// ======================================================================================= /////////////////////
 // Actors single page starts here
 const actorDetails = async (actor) => {
+  // console.log(actor.id) //shows me clicked on actor's id
   const actorRes = await fetchActor(actor.id);
-  console.log(actorRes);
+  const creditsresult = await fetchCredits(actor.id);
+  // console.log(actorRes) // shows me details about the actor
   renderActor(actorRes);
+  render(creditsresult);
 };
 const fetchActor = async (personId) => {
   const url = constructUrl(`person/${personId}`);
   const res = await fetch(url);
   return res.json();
 };
-const renderActor = (actor) => {
-  let alsoKnownAsArr = [];
-  for (let item in actor["also_known_as"]) {
-    alsoKnownAsArr.push(item);
+const fetchCredits = async (personId) => {
+  const url = constructUrl(`person/${personId}/movie_credits`);
+  const res = await fetch(url);
+  return res.json();
+};
+
+const render = (creditsresult) => {
+  let castArr = creditsresult["cast"];
+  for (let i = 0; i < 4; i++) {
+    movieCredits.innerHTML += `
+         <div class="card p-2" style="width: 10rem;height:10rem">
+         <img src='${
+           castArr[i].poster_path
+             ? BACKDROP_BASE_URL + castArr[i].poster_path
+             : images / No-image.png
+         }'>
+          <p class="card-text text-dark d-flex justify-content-center p-0 m-0">${
+            castArr[i]["original_title"]
+          }</p>
+        </div>   
+  `;
   }
-  let slicedKnownforArr = alsoKnownAsArr.slice(0, 5) + "...";
+};
+const renderActor = (actor) => {
   CONTAINER.innerHTML = `
   <div class="container d-flex flex-column">
   <div class="row">
@@ -258,9 +279,7 @@ const renderActor = (actor) => {
         <h4>Personal Info</h4>
       </strong>
       <h5 class="actorH5">gender</h5>
-      <p>${
-        actor["gender"] === 1 ? "Female" : "Man"
-      }</p>
+      <p>${actor["gender"] === 1 ? "Female" : "Man"}</p>
 
       <h5>birthday</h5>
       <p>${actor["birthday"]}</p>
@@ -268,22 +287,12 @@ const renderActor = (actor) => {
       <h5>popularity</h5>
       <p>${actor["popularity"]}</p>
     </div>
-    <div class="col-8">
-    ${slicedKnownforArr}
+    <div class="col-8 d-flex flex-row justify-content-center" id='movieCredits'>
+      
     </div>
   </div>
 </div>`;
 };
-// when page loads fetch known for movies by there name from the array
-/**
- actor.knownfor will show us an array of the names of the movies
-then we can loop throw our movies api and check for each movie 
-if our name equalss the movies name push it to ann array
-we will have an array of objects 
-then return movies.picture 
-render it in the small box with a clcik event
-*/
-
 // Actors single page endss here
 // About us page starts here
 const aboutUsBtn = document.getElementById("aboutUs");
