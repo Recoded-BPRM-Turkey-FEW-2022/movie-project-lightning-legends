@@ -233,22 +233,19 @@ const fetchCredits = async (personId) => {
   const res = await fetch(url);
   return res.json();
 };
-
 const render = (creditsresult) => {
   let castArr = creditsresult["cast"];
   for (let i = 0; i < 4; i++) {
     movieCredits.innerHTML += `
-         <div class="card p-2" style="width: 10rem;height:10rem">
-         <img src='${
-           castArr[i].poster_path
-             ? BACKDROP_BASE_URL + castArr[i].poster_path
-             : images / No-image.png
-         }'>
-          <p class="card-text text-dark d-flex justify-content-center p-0 m-0">${
-            castArr[i]["original_title"]
-          }</p>
-        </div>   
-  `;
+      <div class="card p-2" style="width: 10rem;height:10rem">
+        <img src='${
+          castArr[i].poster_path
+            ? BACKDROP_BASE_URL + castArr[i].poster_path
+            : images / No - image.png
+        }' class="card-img-top" style="width: 10rem;height:10rem" alt="...">
+        <p class="card-text text-dark d-flex justify-content-center p-0 m-0">${castArr[i]["original_title"]}</p>
+      </div>
+    `;
   }
 };
 const renderActor = (actor) => {
@@ -287,8 +284,15 @@ const renderActor = (actor) => {
       <h5>popularity</h5>
       <p>${actor["popularity"]}</p>
     </div>
-    <div class="col-8 d-flex flex-row justify-content-center" id='movieCredits'>
-      
+    <div class="col-8 justify-content-center">
+      <div class="row">
+        <strong>
+         <h5>Known for:</h5>
+        </strong>
+      </div>
+      <div class='row justify-content-center align-content-center' id='movieCredits'>
+
+      </div>
     </div>
   </div>
 </div>`;
