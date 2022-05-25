@@ -291,7 +291,6 @@ const renderActor = (actor) => {
         </strong>
       </div>
       <div class='row justify-content-center align-content-center' id='movieCredits'>
-
       </div>
     </div>
   </div>
