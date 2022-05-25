@@ -210,13 +210,15 @@ h5 {
   left: 0;
   margin-top: -250px;
   outline: none;
+  height: 25rem;
 }
 
 .footerContainer {
-  width: 100%;
+  /* width: 100%; */
   color:#898b96;
   display: flex;
   justify-content: center;
+  text-align: center;
   background: rgb(10, 21, 37);
   background: rgb(68, 17, 47);
   background: linear-gradient(

@@ -132,7 +132,6 @@ const fetchMoviesSimilar = async (genreId) => {
 //==================
 const fetchMoviesSimilarNewPAge = async (genreId, pageNumber) => {
   const url = constructUrlNewPage(`movie/${genreId}/similar`, pageNumber);
-  console.log(url);
   const res = await fetch(url);
   return res.json();
 };
@@ -218,7 +217,7 @@ actorsBtn.addEventListener("click", addingActors);
 const actorDetails = async (actor) => {
   const actorRes = await fetchActor(actor.id);
   renderActor(actorRes);
-  known_for(actor);
+  // credits(actor.id);
 };
 function known_for(actor) {
   for (let i = 0; i < actor["known_for"].length; i++) {
@@ -237,12 +236,20 @@ function known_for(actor) {
   </div>`;
   }
 }
+// const credits = async (id) => {
+//   console.log(id)
+//   const url = constructUrl(`person/{id}/movie_credits`);
+//   const res = await fetch(url);
+//   console.log(res)
+//   return res.json()
+// }
 const fetchActor = async (personId) => {
   const url = constructUrl(`person/${personId}`);
   const res = await fetch(url);
   return res.json();
 };
 const renderActor = (actor) => {
+  credits(actor.id);
   CONTAINER.classList.add("pt-1");
   CONTAINER.innerHTML = `
   <div class="container pt-0 mt-0 d-flex flex-column">
@@ -287,6 +294,10 @@ const renderActor = (actor) => {
 const aboutUsBtn = document.getElementById("aboutUs");
 const openAboutUsPage = () => {
   CONTAINER.innerHTML = " ";
+  CONTAINER.classList.add('d-flex')
+  CONTAINER.classList.add('flex-column')
+  CONTAINER.classList.add('align-items-center')
+
   CONTAINER.innerHTML = `
   <div class='container aboutUsContainer d-flex justify-content-center flex-column align-items-center'>
     <div class='undrawContainer'>
@@ -334,7 +345,6 @@ const openAboutUsPage = () => {
         </div>
       </div>
     </div>
-  </div>
 `;
 };
 aboutUsBtn.addEventListener("click", openAboutUsPage);
@@ -342,26 +352,21 @@ aboutUsBtn.addEventListener("click", openAboutUsPage);
 // Search box starts here
 const searchBox = document.getElementById("searchBox");
 const searchBtn = document.getElementById("searchBtn");
+
+const searchRes = async (value) => {
+  const url = `https://api.themoviedb.org/3/search/multi?api_key=${atob(
+    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI="
+  )}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.results;
+};
+
 const searching = async (event) => {
+  console.log(searchBox.value);
   event.preventDefault();
-  let searchBoxValue = searchBox.value;
-  let fechedMoviesobj = await fetchMovies(); // this is like a main object it has keys and some of the keys has array.
-  let moviesArr = fechedMoviesobj.results; // shows the result part of our main object and it is an array of objects each object has movie info
-  for (let i = 0; i < moviesArr.length; i++) {
-    if (
-      searchBoxValue.toLowerCase() ==
-      moviesArr[i]["original_title"].toLowerCase()
-    ) {
-      renderMovie(moviesArr[i]);
-      movieDetails(moviesArr[i]);
-      break;
-    } else if (
-      searchBoxValue.toLowerCase() !==
-      moviesArr[i]["original_title"].toLowerCase()
-    ) {
-      CONTAINER.innerHTML = "we couldn find what you are looking for";
-    }
-  }
+  const results = await searchRes(searchBox.value);
+  renderMovies(results);
 };
 searchBtn.addEventListener("click", searching);
 // Search box ends here
