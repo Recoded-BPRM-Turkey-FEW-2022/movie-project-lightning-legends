@@ -213,35 +213,19 @@ h5 {
     outline: none;
 }
 
-/* .undraw {
-  /* background-image: url("./undraw.svg");
-  height: 380px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  z-index: 1; */
+#searchBox {
+  background: transparent;
+  border-color: #d27373;
+  color: white;
+ }
 
-/* .undraw h2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 380px;
-  position: relative;
-  top: 40px;
-  font-size: 3em;
-  color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.5);
-} */
-/* 
-.undraw {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 22;
-}
-.hithereh2 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 3;
-} */
+ .btn-outline-success:hover {
+   color: #fff;
+   background-color: #d27373;
+   border-color: #d26767;
+ }
+ 
+ .btn-outline-success {
+   color: #d27373;
+   border-color: #d27373;
+ }
