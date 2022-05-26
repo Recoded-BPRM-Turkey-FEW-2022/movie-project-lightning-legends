@@ -225,3 +225,9 @@ h5 {
     rgba(10, 21, 37, 1) 100%
   );
 }
+.notFoundMsgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}

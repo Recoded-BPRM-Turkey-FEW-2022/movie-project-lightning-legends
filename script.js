@@ -342,25 +342,32 @@ aboutUsBtn.addEventListener("click", openAboutUsPage);
 // Search box starts here
 const searchBox = document.getElementById("searchBox");
 const searchBtn = document.getElementById("searchBtn");
+const searchUrl = (search) => {
+  return `${TMDB_BASE_URL}/search/multi?api_key=${atob(
+    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI="
+  )}&query=${search}`;
+};
+const searchRes = async (value) => {
+  const url = searchUrl(value);
+  const res = await fetch(url);
+  const data = await res.json();
+  console.log(data);
+  console.log(data.results);
+  return data.results;
+};
 const searching = async (event) => {
   event.preventDefault();
-  let searchBoxValue = searchBox.value;
-  let fechedMoviesobj = await fetchMovies(); // this is like a main object it has keys and some of the keys has array.
-  let moviesArr = fechedMoviesobj.results; // shows the result part of our main object and it is an array of objects each object has movie info
-  for (let i = 0; i < moviesArr.length; i++) {
-    if (
-      searchBoxValue.toLowerCase() ==
-      moviesArr[i]["original_title"].toLowerCase()
-    ) {
-      renderMovie(moviesArr[i]);
-      movieDetails(moviesArr[i]);
-      break;
-    } else if (
-      searchBoxValue.toLowerCase() !==
-      moviesArr[i]["original_title"].toLowerCase()
-    ) {
-      CONTAINER.innerHTML = "we couldn find what you are looking for";
-    }
+  const results = await searchRes(searchBox.value);
+  console.log(results);
+  CONTAINER.innerHTML = " ";
+  if (results.length !== 0) {
+    renderMovies(results);
+  } else {
+    CONTAINER.innerHTML = `
+      <div class='notFoundMsgContainer'>
+        There are no movies that matched your query.
+      </div>
+    `;
   }
 };
 searchBtn.addEventListener("click", searching);
