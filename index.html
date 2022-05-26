@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
     <title>Movie</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light ">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <div class="collapse navbar-collapse " id="navbarTogglerDemo01">
           <a class="navbar-brand" href="#">Hidden brand</a>
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
@@ -23,7 +25,7 @@
             <li class="nav-item">
               <!-- COLUMNS -->
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  MOVIES
                 </button>
                 <div class="dropdown-menu dropdown-multicol2" aria-labelledby="dropdownMenuButton">
@@ -55,9 +57,30 @@
               </div>    
               <!-- COLUMNS END-->
            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
+            <li class="nav-item ">
+              <div class="ml-5 ">
+                <i class="fa fa-film"></i><a class="nav-link topRated d-inline " href="#">Top Rated</a>
+              </div>
+              
             </li>
+          </li>
+          <li class="nav-item">
+            <div class="ml-3 ">
+              <i class="fa fa-ticket"></i>  <a class="nav-link upcoming d-inline " href="#">Upcoming</a>
+            </div>
+            
+          </li>
+        </li>
+        <li class="nav-item">
+          <div class="ml-3 ">
+            <i class="fa fa-trophy mr-2"></i> <a class="nav-link popular d-inline " href="#">Popular</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="ml-3 ">
+            <i class="fa-solid fa-comment"></i> <a class="nav-link recommendations d-inline " href="#">Recommendations</a> 
+          </div>
+        </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -65,34 +88,13 @@
           </form>
         </div>
       </nav>
+              </div>
+              <div class="container col">
+                <!-- here -->
+              </div>
+          </div>
+      </div> 
 
-    <div class="container">
-            <!-- here -->
-        <div class="page0">
-            <!-- homePage -->
-        </div>
-
-        <div class="page1"> 
-            <!-- actors -->
-        </div>
-
-        <!-- movies section  -->
-        <div class="page2">
-          
-            <!-- movies -->
-        </div>
-
-        <div class="page3">
-            <!-- search result -->
-        </div>
-
-        <div class="page4">
-            <!-- filter -->
-        </div>
-
-        <div class="page5">
-            <!-- aboutUs -->
-        </div>
 
     </div>
     
