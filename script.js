@@ -97,8 +97,6 @@ const render = (creditsresult) => {
   }
 };
 const renderActor = (actor) => {
-  CONTAINER.classList.add('d-flex')
-  CONTAINER.classList.add('flex-column')
   CONTAINER.innerHTML = `
   <div class="row">
       <div class="col-4">
