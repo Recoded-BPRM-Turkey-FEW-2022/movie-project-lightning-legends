@@ -235,66 +235,61 @@ const fetchCredits = async (personId) => {
 };
 const render = (creditsresult) => {
   let castArr = creditsresult["cast"];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 7; i++) {
     movieCredits.innerHTML += `
-      <div class="card p-2" style="width: 10rem;height:10rem">
+      <div class="card h-100 p-1 " style="width: 10rem;height:10rem">
         <img src='${
           castArr[i].poster_path
             ? BACKDROP_BASE_URL + castArr[i].poster_path
             : images / No - image.png
         }' class="card-img-top" style="width: 10rem;height:10rem" alt="...">
-        <p class="card-text text-dark d-flex justify-content-center p-0 m-0">${castArr[i]["original_title"]}</p>
+        <p class="card-text text-dark d-flex justify-content-center p-0 m-0">${
+          castArr[i]["original_title"]
+        }</p>
       </div>
     `;
   }
 };
 const renderActor = (actor) => {
   CONTAINER.innerHTML = `
-  <div class="container d-flex flex-column">
   <div class="row">
-    <div class="col-md-4">
-      <img src="${
-        actor.profile_path
-          ? BACKDROP_BASE_URL + actor.profile_path
-          : "https://via.placeholder.com/350"
-      }" alt="Card image cap">
+      <div class="col-4">
+        <img src="${
+          actor.profile_path
+            ? BACKDROP_BASE_URL + actor.profile_path
+            : "https://via.placeholder.com/350"
+        }" alt="Card image cap" style="width:21rem;height:27rem">
+      </div>
+      <div class="col-8">
+        <div class="row flex-column">
+          <strong>
+            <h2>${actor["name"]}</h2>
+          </strong>
+          <strong>
+            <h5>Gender:</h5>
+          </strong>
+          <p>${actor["gender"] === 1 ? "Female" : "Man"}</p>
+          <strong>
+            <h5>Birthday:</h5>
+          </strong>
+          <p>${actor["birthday"]}</p>
+          <h5>popularity</h5>
+          <p>${actor["popularity"]}</p>
+          <strong>
+            <h5>Biography:</h5>
+          </strong>
+          <p>${actor["biography"]}</p>
+        </div>
+      </div>
     </div>
-    <div class="col-6 col-md-8">
-      <strong>
-        <h1>${actor.name}</h1>
-      </strong>
-      <br>
-      <strong>
-        <h5>Biography</h5>
-      </strong>
-      <p>${actor.biography}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-4">
-      <strong>
-        <h4>Personal Info</h4>
-      </strong>
-      <h5 class="actorH5">gender</h5>
-      <p>${actor["gender"] === 1 ? "Female" : "Man"}</p>
-
-      <h5>birthday</h5>
-      <p>${actor["birthday"]}</p>
-
-      <h5>popularity</h5>
-      <p>${actor["popularity"]}</p>
-    </div>
-    <div class="col-8 justify-content-center">
-      <div class="row">
+    <div class="row flex-column">
         <strong>
-         <h5>Known for:</h5>
+         <h5 class='pl-3'>Known for:</h5>
         </strong>
-      </div>
-      <div class='row justify-content-center align-content-center' id='movieCredits'>
+      <div class="row justify-content-center align-content-center" id='movieCredits'>
       </div>
     </div>
-  </div>
-</div>`;
+  `;
 };
 // Actors single page endss here
 // About us page starts here
