@@ -19,7 +19,6 @@ img{
     max-width: 100%;
 }
  nav{
-  
     padding: 2rem !important;
     background-color: transparent;
     font-weight: bold;
@@ -36,15 +35,6 @@ img{
     font-size: 1.3rem;
   text-align: center;
 } 
-
-
-/* .dropdown{
-    font-weight: bold;
-    background-color: inherit;
-    margin-left: 1rem;
-    font-family: inherit;
-} */
-
 
 .container {
     margin: 1rem 0rem;
