@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const PROFILE_BASE_URL = "http://image.tmdb.org/t/p/w185";
 const BACKDROP_BASE_URL = "http://image.tmdb.org/t/p/w780";
 const CONTAINER = document.querySelector(".container");
+const actorsRow = document.querySelector(".actorsRow");
 
 // Don't touch this function please
 const autorun = async () => {
@@ -18,9 +19,9 @@ const constructUrl = (path) => {
   )}`;
 };
 
-
 // You may need to add to this function, definitely don't delete it.
 const movieDetails = async (movie) => {
+  console.log('hiiii')
   const movieRes = await fetchMovie(movie.id);
   const movieCrd = await fetchMoviesCridit(movie.id);
   const movietrailer =await  movieTrailer(movie.id);
@@ -31,14 +32,13 @@ const movieDetails = async (movie) => {
   renderMovie(movieRes,movieCrd.cast,key);
   actorName(movieCrd.cast);
   renderMovies(d);
-  
 };
 
 // This function is to fetch movies. You may need to add it or change some part in it in order to apply some of the features.
 const fetchMovies = async () => {
-  const url = constructUrl(`movie/now_playing`);
+  const url = constructUrl(`movie/now_playing`); //person/{person_id} //movie/now_playing
   const res = await fetch(url);
-    return res.json();
+  return res.json(); // shows a listt of now playing movis
 };
 
 // Don't touch this function please. This function is to fetch one movie.
@@ -56,13 +56,6 @@ const renderMovies = (movies) => {
         const movieDiv = document.createElement("div");
         
         movieDiv.setAttribute('class',`he `)
-      //  movieDiv.addEventListener("mouseover",  ()=>{
-      //   hoverDetailes(movie,movieDiv) ;
-      //  });
-      //  movieDiv.addEventListener("mouseout", ()=>{
-      //    hoverDetailes1(movie,movieDiv)
-        
-      //  });
         divIndex++;
         movieDiv.innerHTML = `
           <div class="card ">
@@ -103,8 +96,7 @@ const renderMovies = (movies) => {
             CONTAINER.appendChild(movieDiv)
             onlyeOnce=true
           }
-      });   
-      
+      });    
     
 };
 
@@ -149,7 +141,6 @@ const renderMovie = (movie,cridit,key) => {
                         <img src="${BACKDROP_BASE_URL + cridit[6].profile_path}" >
                         <img src="${BACKDROP_BASE_URL + cridit[7].profile_path}" >
                       </figure>
-
                       <span class="ActorName" >${cridit[0].original_name} </span> 
                     </div>
                   <span style="float:left" class="ss-icon" onclick="galleryspin('-')">&lt;</span>
@@ -157,12 +148,9 @@ const renderMovie = (movie,cridit,key) => {
                 </div>
                </div>
                <div class="re"></div>
-
               </div>
-
             </div>     
             </div>
-
     `;
     
 };
@@ -215,12 +203,9 @@ const fetchMoviesSimilar = async (genreId,typeId) => {
 
 //==================
 const fetchMoviesSimilarNewPAge = async (genreId,pageNumber) => {
- 
   const url = constructUrlNewPage(`movie/${genreId}/similar`,pageNumber);
   const res = await fetch(url);
   return res.json();
-
-   
 };
 
 const constructUrlNewPage = (path,pageNumber) => {
@@ -250,8 +235,6 @@ async function dd(){
       v.results.slice(0,5);
       return v.results.slice(0,5);
 };
-
-
 
 let type='upcoming';
 //===============topRated Moview Part==================
@@ -309,7 +292,6 @@ let nameAr=[];
   }
 }
 
-
 let angle = 0;
 let index=0;
 function galleryspin(sign) { 
@@ -324,44 +306,6 @@ if (!sign) { angle = angle+45 ; } else { angle = angle - 45;}
 spinner.setAttribute("style","-webkit-transform: rotateY("+ angle +"deg); -moz-transform: rotateY("+ 0 +"deg); transform: rotateY("+ angle +"deg);");
 }
 
-
-// const page0=document.querySelector('.page0')
-//  function hoverDetailes(movie,div){
-//   const hoverInfo=document.createElement('div')
-//     hoverInfo.setAttribute('class','hoverInfo');  
-    
-//     hoverInfo.innerHTML=`
-//         <div class="movieOverview">
-//           <p>${movie.overview}</p>
-//         </div>
-//         <div class="movieGenre">
-//         </div>
-//     `
-//   setTimeout(async ()=>{
-//     div.setAttribute('Id','blurDiv')
-//     div.appendChild(hoverInfo)
-//   },100)
-  
- 
-  
-  // console.log("enter")
-//}
-// async function hoverDetailes1(movie,div){
-//     const hoverInfo=document.querySelector('.hoverInfo')
-//   setTimeout(async ()=>{
-//     div.removeAttribute('Id')
-//     hoverInfo.innerHTML=" ";
-//     hoverInfo.remove();
-    
-//   },100)
-//   hoverInfo.remove();
-
-
-  // console.log("leave")
-//}
-
-
-
 //================================================
 
 const Moviefilter = async (type) => {
@@ -372,33 +316,241 @@ const Moviefilter = async (type) => {
   renderMovies(movie.results);
 };
 
+// =============================New Codes
 
-// https://api.themoviedb.org/3/movie/752623/credits/?api_key=542003918769df50083a13c415bbc602%20%20||%20
-// https://api.themoviedb.org/3/movie/28/credits?api_key=542003918769df50083a13c415bbc602&language=en-US
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", autorun);
-
-
-
-
-
-
+// Actors single page starts here
+const actorDetails = async (actor) => {
+  const actorRes = await fetchActor(actor.id);
+  const creditsresult = await fetchCredits(actor.id);
+  onlyeOnce=false;
+  renderActor(actorRes);
+  render(creditsresult);
+};
+const fetchActor = async (personId) => {
+  const url = constructUrl(`person/${personId}`);
+  const res = await fetch(url);
+  return res.json();
+};
+const fetchCredits = async (personId) => {
+  const url = constructUrl(`person/${personId}/movie_credits`);
+  const res = await fetch(url);
+  return res.json();
+};
+const render = (creditsresult) => {
+  renderActorMovie(creditsresult.cast.slice(0,5)); 
+};
 
 
+const renderActorMovie = (movies) => {
+  console.log(movies)
+  const movieCredits =document.querySelector('.movieCredits');
+  movies.forEach ((movie) => {
+    const div=document.createElement('div')
+    console.log(movie)
+    console.log("i")
+        div.innerHTML = `
+        <div class="card1 ">
+            <div class="front front1">
+          <img class="smallPosterimg1 " style="border-radius: 25px;" src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
+            movie.title
+          } poster">
+            <div class="smallPoster" >
+            <span > <img class="smallPosterimg" src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${
+              movie.title
+            } poster"></span> <span class="h3P"><h3>${movie.title}</h3>
+    
+            </span> 
+            <svg  xmlns="http://www.w3.org/2000/svg" class="h-1 w-0 svg2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+         </svg>
+            </div>
+            <div class="movieDetiles ">
+              <div>Release Date<br>${movie.release_date}</div>
+              <div>Rating <br>${movie.vote_average}</div>
+              <div>Lang<br>${movie.original_language}</div>
+              <div>Vote Count<br>${movie.vote_count}</div>
+            </div>
+          </div>
+          
+          </div>
+          `;
+        movieCredits.append(div)
+
+        movieCredits.addEventListener("click", () => {  
+         movieDetails(movie);
+        });         
+       
+       
+    });    
+  
+};
+
+
+
+
+
+const renderActor = (actor) => {
+  CONTAINER.innerHTML = `
+  <div class="act_or">
+   <div class="row">
+      <div class="col-4">
+        <img src="${
+          actor.profile_path
+            ? BACKDROP_BASE_URL + actor.profile_path
+            : "https://via.placeholder.com/350"
+        }" alt="Card image cap" style="width:21rem;height:27rem">
+      </div>
+      <div class="col-8">
+          <strong>
+            <h2>${actor["name"]}</h2>
+          </strong>
+          
+          <strong>
+            <h5>Gender:</h5>
+          </strong>
+          <p>${actor["gender"] === 1 ? "Female" : "Man"}</p>
+          <strong>
+            <h5>Birthday:</h5>
+          </strong>
+          <p>${actor["birthday"]}</p>
+          <h5>popularity</h5>
+          <p>${actor["popularity"]}</p>
+          <strong>
+            <h5>Biography:</h5>
+          </strong>
+          <p>${actor["biography"]}</p>
+      </div>
+    </div>
+        <div>
+        <strong>
+         <h5 class='pl-3'>Known for:</h5>
+        </strong>
+        </div>
+    <div class="movieCreditsParent ">
+        
+      <div  class='movieCredits'>
+      
+      </div>
+    </div>
+  </div>
+      `;
+};
+// Actors single page endss here
+
+
+
+
+//HomePage starts here
+const homePageBtn = document.getElementById("homePage");
+const homePage = async () => {
+  let moviesInfo = await fetchMovies();
+  let moviesarray = moviesInfo.results;
+  CONTAINER.innerHTML = " ";
+  renderMovies(moviesarray);
+};
+homePageBtn.addEventListener("click", homePage);
+
+//HomePage endss here
+const actorsBtn = document.getElementById("actors");
+const fetchActors = async () => {
+  const url = constructUrl("person/popular"); //person/{person_id} //movie/now_playing
+  const res = await fetch(url);
+  return res.json(); // shows a lsit of popular people
+};
+
+//==================rendering Actors===================
+const renderingActors = (actor1) => {
+  onlyeOnce=false;
+//============
+actor1.map((actor) => {
+  const actorCardsDiv = document.createElement("div");
+    let knFor=" "  
+  if(typeof(actor.known_for[0].original_title) === "undefined" ){
+        knFor ="there is no data";
+    } 
+    else{
+      knFor=actor.known_for[0].original_title +actor.known_for[1].original_title
+    }
+  actorCardsDiv.innerHTML += `
+    
+    <div class="row mb-5 actorCards">
+      <div class="col ree">
+        <div class="cardd    " >
+          <img class="card-img-top" src="${
+            actor.profile_path
+              ? BACKDROP_BASE_URL + actor.profile_path
+              : "https://via.placeholder.com/350"
+          }" alt="Card image cap" style="width: 15rem;height:15rem">
+          <p class="text-dark mb-0 pl-2 ">
+            <a><strong>${
+              actor["name"].length >= 25
+                ? actor["name"].slice(0, 20) + "..."
+                : actor["name"]
+            }</strong></a>
+          </p>
+          <p class="card-text pl-2 text-muted">${knFor.slice(0,50)}...</p>
+        </div>
+      
+      </div>`;
+
+      actorCardsDiv.addEventListener("click", () => {
+        actorDetails(actor)
+        
+    });      
+    console.log("u")
+    CONTAINER.append(actorCardsDiv); // i midoified here
+
+   
+});  
+
+
+};
+const addingActors = async () => {
+  let fetchedActorObj = await fetchActors();
+  let actorsList = fetchedActorObj.results;
+  CONTAINER.innerHTML = "";
+  renderingActors(actorsList)
+  
+};
+actorsBtn.addEventListener("click", addingActors);
+//  Actros list page ends here
+
+
+
+//==========
+// Search box starts here
+const searchBox = document.getElementById("searchBox");
+const searchBtn = document.getElementById("searchBtn");
+const searchUrl = (search) => {
+  return `${TMDB_BASE_URL}/search/multi?api_key=${atob(
+    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI="
+  )}&query=${search}`;
+};
+const searchRes = async (value) => {
+  const url = searchUrl(value);
+  const res = await fetch(url);
+  const data = await res.json();
+  console.log(data);
+  console.log(data.results);
+  return data.results;
+};
+const searching = async (event) => {
+  event.preventDefault();
+  const results = await searchRes(searchBox.value);
+  console.log(results);
+  CONTAINER.innerHTML = " ";
+  if (results.length !== 0) {
+    renderMovies(results);
+  } else {
+    CONTAINER.innerHTML = `
+      <div class='notFoundMsgContainer'>
+        There are no movies that matched your query.
+      </div>
+    `;
+  }
+};
+searchBtn.addEventListener("click", searching);
+// Search box ends here
 
 
 
@@ -413,23 +565,4 @@ document.addEventListener("DOMContentLoaded", autorun);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// https://api.themoviedb.org/3/movie/{movie_id}?api_key=542003918769df50083a13c415bbc602&language=en-US
-// https://api.themoviedb.org/3/genre/movie/list?api_key=542003918769df50083a13c415bbc602&language=en-US
-// https://api.themoviedb.org/3/movie/now_playing?api_key=542003918769df50083a13c415bbc602
-// https://api.themoviedb.org/4/list/{list_id}?page=1&api_key=542003918769df50083a13c415bbc602
+document.addEventListener("load", autorun());

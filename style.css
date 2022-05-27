@@ -26,7 +26,7 @@ nav{
     text-align: center;
 }
 .btn{
-    font-weight: bold;
+    font-weight: ;
 }
 
 .dropdown{
@@ -438,5 +438,47 @@ hr{
   }
   
 
+.actorCards{
+    margin: auto;
+    background-color: rgba(201, 11, 11,0);
+    border-radius: 10px;
+  }
 
-  
+  .ree{
+    max-width: 13rem;
+    background-color: rgb(255, 255, 255);
+    padding: 0rem;
+    display: flex;
+    justify-content: center;
+    transition: 0.5s;
+    min-height: 22rem;
+}
+.ree:hover{
+    box-shadow: 0px 0px 5px rgb(88, 79, 79);
+}
+.cardd{
+    width: 200px;
+    
+}
+.card-img-top{
+
+border: 5px solid rgb(251, 246, 246);
+border-bottom: 3px solid rgb(93, 93, 70);
+margin-bottom: 1rem;
+}
+.act_or{
+    display: flex;
+    flex-direction: column;
+}
+.movieCredits{
+    padding:1rem;
+    display: grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    grid-auto-rows:auto;
+    gap: 1rem;
+    max-height: 600px;
+}
+.movieCredits div{
+    position: relative;
+    
+}
