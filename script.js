@@ -88,7 +88,8 @@ const fetchActors = async () => {
   const res = await fetch(url);
   return res.json(); // shows a lsit of popular people
 };
-let actorsListContainer = document.createElement("div");
+let actorsListRow = document.createElement("div");
+actorsListRow.classList.add('row');
 const renderingActors = (actor) => {
   let known_forArr = [];
   for (let item of actor["known_for"]) {
@@ -101,10 +102,8 @@ const renderingActors = (actor) => {
   let splitedArr = known_forArr.join(", ");
   let slicedKnownforArr = splitedArr.slice(0, 30) + "...";
   const actorCardsDiv = document.createElement("div");
-  actorCardsDiv.classList.add("mayce");
-  actorCardsDiv.classList.add("justify-content-center");
+  actorCardsDiv.classList.add('col')
   actorCardsDiv.innerHTML += `
-      <div class="col">
         <div class="card shadow-lg d-flex align-items-center m-3" style="width: 15rem;">
           <img class="card-img-top" src="${
             actor.profile_path
@@ -116,11 +115,13 @@ const renderingActors = (actor) => {
           </p>
           <p class="card-text pl-2 text-muted">${slicedKnownforArr}</p>
         </div>
-      </div>`;
+      `;
   actorCardsDiv.addEventListener("click", () => {
     actorDetails(actor);
   });
-  CONTAINER.append(actorCardsDiv);
+  actorsListRow.append(actorCardsDiv);
+  CONTAINER.append(actorsListRow);
+
 };
 const addingActors = async () => {
   let fetchedActorObj = await fetchActors();
@@ -132,7 +133,6 @@ const addingActors = async () => {
 };
 actorsBtn.addEventListener("click", addingActors);
 //  Actros list page ends here
-// ======================================================================================= /////////////////////
 // Actors single page starts here
 const actorDetails = async (actor) => {
   // console.log(actor.id) //shows me clicked on actor's id
@@ -281,14 +281,11 @@ const searchRes = async (value) => {
   const url = searchUrl(value);
   const res = await fetch(url);
   const data = await res.json();
-  console.log(data);
-  console.log(data.results);
   return data.results;
 };
 const searching = async (event) => {
   event.preventDefault();
   const results = await searchRes(searchBox.value);
-  console.log(results);
   CONTAINER.innerHTML = " ";
   if (results.length !== 0) {
     renderMovies(results);
