@@ -21,6 +21,7 @@ const constructUrl = (path) => {
 
 // You may need to add to this function, definitely don't delete it.
 const movieDetails = async (movie) => {
+  console.log('hiiii')
   const movieRes = await fetchMovie(movie.id);
   const movieCrd = await fetchMoviesCridit(movie.id);
   const movietrailer =await  movieTrailer(movie.id);
@@ -55,13 +56,6 @@ const renderMovies = (movies) => {
         const movieDiv = document.createElement("div");
         
         movieDiv.setAttribute('class',`he `)
-      //  movieDiv.addEventListener("mouseover",  ()=>{
-      //   hoverDetailes(movie,movieDiv) ;
-      //  });
-      //  movieDiv.addEventListener("mouseout", ()=>{
-      //    hoverDetailes1(movie,movieDiv)
-        
-      //  });
         divIndex++;
         movieDiv.innerHTML = `
           <div class="card ">
@@ -92,7 +86,7 @@ const renderMovies = (movies) => {
           </div>
           `;
 
-              movieDiv.addEventListener("click", () => {          
+          movieDiv.addEventListener("click", () => {          
           movieDetails(movie);
         });         
           if(movies.length===5){
@@ -147,7 +141,6 @@ const renderMovie = (movie,cridit,key) => {
                         <img src="${BACKDROP_BASE_URL + cridit[6].profile_path}" >
                         <img src="${BACKDROP_BASE_URL + cridit[7].profile_path}" >
                       </figure>
-
                       <span class="ActorName" >${cridit[0].original_name} </span> 
                     </div>
                   <span style="float:left" class="ss-icon" onclick="galleryspin('-')">&lt;</span>
@@ -155,9 +148,7 @@ const renderMovie = (movie,cridit,key) => {
                 </div>
                </div>
                <div class="re"></div>
-
               </div>
-
             </div>     
             </div>
     `;
@@ -212,7 +203,6 @@ const fetchMoviesSimilar = async (genreId,typeId) => {
 
 //==================
 const fetchMoviesSimilarNewPAge = async (genreId,pageNumber) => {
- 
   const url = constructUrlNewPage(`movie/${genreId}/similar`,pageNumber);
   const res = await fetch(url);
   return res.json();
@@ -237,7 +227,6 @@ document.addEventListener('scroll', () => {
       console.log('hello1')
     })();
   }
-   
 });
 
 async function dd(){
@@ -303,6 +292,7 @@ let nameAr=[];
 }
 
 
+//======================= Animation flipCard ===================
 let angle = 0;
 let index=0;
 function galleryspin(sign) { 
@@ -316,46 +306,9 @@ function galleryspin(sign) {
 if (!sign) { angle = angle+45 ; } else { angle = angle - 45;}
 spinner.setAttribute("style","-webkit-transform: rotateY("+ angle +"deg); -moz-transform: rotateY("+ 0 +"deg); transform: rotateY("+ angle +"deg);");
 }
+//=======================End Animation flipCard ===================
 
 
-// const page0=document.querySelector('.page0')
-//  function hoverDetailes(movie,div){
-//   const hoverInfo=document.createElement('div')
-//     hoverInfo.setAttribute('class','hoverInfo');  
-    
-//     hoverInfo.innerHTML=`
-//         <div class="movieOverview">
-//           <p>${movie.overview}</p>
-//         </div>
-//         <div class="movieGenre">
-//         </div>
-//     `
-//   setTimeout(async ()=>{
-//     div.setAttribute('Id','blurDiv')
-//     div.appendChild(hoverInfo)
-//   },100)
-  
- 
-  
-  // console.log("enter")
-//}
-// async function hoverDetailes1(movie,div){
-//     const hoverInfo=document.querySelector('.hoverInfo')
-//   setTimeout(async ()=>{
-//     div.removeAttribute('Id')
-//     hoverInfo.innerHTML=" ";
-//     hoverInfo.remove();
-    
-//   },100)
-//   hoverInfo.remove();
-
-
-  // console.log("leave")
-//}
-
-
-
-//================================================
 
 const Moviefilter = async (type) => {
   const movie = await fetchMoviesfilter(type);
@@ -365,187 +318,127 @@ const Moviefilter = async (type) => {
   renderMovies(movie.results);
 };
 
-//mayce's code starts here
-// Actros list page starts here
-const actorsBtn = document.getElementById("actors");
-const fetchActors = async () => {
-  const url = constructUrl("person/popular"); //person/{person_id} //movie/now_playing
-  const res = await fetch(url);
-  return res.json(); // shows a lsit of popular people
-};
-const actorCardsDiv = document.createElement("div");
-actorCardsDiv.classList.add("row");
-actorCardsDiv.classList.add("justify-content-center");
-const renderingActors = (actor) => {
-  let known_forArr = [];
-  for (let item of actor["known_for"]) {
-    if (item["name"]) {
-      known_forArr.push(item["name"]);
-    } else if (item["original_title"]) {
-      known_forArr.push(item["original_title"]);
-    }
-  }
-  let splitedArr = known_forArr.join(", ");
-  let slicedKnownforArr = splitedArr.slice(0, 30) + "...";
-  actorCardsDiv.innerHTML += `
-    <div class="row d-flex flex-wrap justify-content-center">
-      <div class="col">
-        <div class="card shadow-lg d-flex align-items-center m-3" style="width: 15rem;">
-          <img class="card-img-top" src="${
-            actor.profile_path
-              ? BACKDROP_BASE_URL + actor.profile_path
-              : "https://via.placeholder.com/350"
-          }" alt="Card image cap">
-          <p class="text-dark mb-0 pl-2 ">
-            <a><strong>${actor["name"]}</strong></a>
-          </p>
-          <p class="card-text pl-2 text-muted">${slicedKnownforArr}</p>
-        </div>
-      </div>`;
-  actorCardsDiv.addEventListener("click", () => {
-    actorDetails(actor);
-  });
-  CONTAINER.append(actorCardsDiv);
-};
-const addingActors = async () => {
-  let fetchedActorObj = await fetchActors();
-  let actorsList = fetchedActorObj.results;
-  CONTAINER.innerHTML = "";
-  for (let i = 0; i < actorsList.length; i++) {
-    renderingActors(actorsList[i]);
-  }
-};
-actorsBtn.addEventListener("click", addingActors);
-//  Actros list page ends here
-// Actors single page starts here
+
+// =================Actors single page starts here===================
 const actorDetails = async (actor) => {
   const actorRes = await fetchActor(actor.id);
+  const creditsresult = await fetchCredits(actor.id);
+  onlyeOnce=false;
   renderActor(actorRes);
+  render(creditsresult);
 };
 const fetchActor = async (personId) => {
   const url = constructUrl(`person/${personId}`);
   const res = await fetch(url);
   return res.json();
 };
+const fetchCredits = async (personId) => {
+  const url = constructUrl(`person/${personId}/movie_credits`);
+  const res = await fetch(url);
+  return res.json();
+};
+const render = (creditsresult) => {
+  renderActorMovie(creditsresult.cast.slice(0,5)); 
+};
+// =================End Actors single page starts here===================
+
+
+
+const renderActorMovie = (movies) => {
+  console.log(movies)
+  const movieCredits =document.querySelector('.movieCredits');
+  movies.forEach ((movie) => {
+    const div=document.createElement('div')
+    console.log(movie)
+    console.log("i")
+     div.innerHTML = `
+        <div class="card1 ">
+            <div class="front front1">
+          <img class="smallPosterimg1 " style="border-radius: 25px;" src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
+            movie.title
+          } poster">
+            <div class="smallPoster" >
+            <span > <img class="smallPosterimg" src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${
+              movie.title
+            } poster"></span> <span class="h3P"><h3>${movie.title}</h3>
+    
+            </span> 
+            <svg  xmlns="http://www.w3.org/2000/svg" class="h-1 w-0 svg2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+         </svg>
+            </div>
+            <div class="movieDetiles ">
+              <div>Release Date<br>${movie.release_date}</div>
+              <div>Rating <br>${movie.vote_average}</div>
+              <div>Lang<br>${movie.original_language}</div>
+              <div>Vote Count<br>${movie.vote_count}</div>
+            </div>
+          </div> 
+          </div>
+          `;
+        movieCredits.append(div)
+        movieCredits.addEventListener("click", () => {  
+         movieDetails(movie);
+        });           
+    });    
+  
+};
+
+
+  // continer.classlis
+
+
 const renderActor = (actor) => {
-  let alsoKnownAsArr = [];
-  for (let item in actor["also_known_as"]) {
-    alsoKnownAsArr.push(item);
-  }
-  console.log(alsoKnownAsArr);
-  let slicedKnownforArr = alsoKnownAsArr.slice(0, 5) + "...";
   CONTAINER.innerHTML = `
-  <div class="row">
-      <div class="col-md-4">
-        <img class="card-img-top" src="${
+  <div class="act_or">
+   <div class="row">
+      <div class="col-4">
+        <img src="${
           actor.profile_path
             ? BACKDROP_BASE_URL + actor.profile_path
             : "https://via.placeholder.com/350"
-        }" alt="Card image cap">
+        }" alt="Card image cap" style="width:21rem;height:27rem">
       </div>
-      <div class="col-md-8">
-      <h2 id="title">${actor.name}</h2>
-        <section class="full_wrapper">
-          <h3 dir="auto">Biography</h3>
-          <div dir="auto" class="biography true">
-              <div class="content fade_text">
-                <div class="text initial">
-                  <p>${actor.biography}</p>
-                </div>
-          </div>
-        </section>
-        <section class="full_wrapper">
-          <div id='known_for'>
-          <h3 dir="auto">known_for</h3>
-            <div id='known_for_scroller' class='scroller_wrap'>
-            ${slicedKnownforArr}
-            </div>
-          </div>
-        </section>
-        <section class="full_wrapper">
-          <div id='personalInfo'>
-           <h4 dir="auto">Personal Information:</h4>
-            </div>
-          </div>
-        </section>
-        <section class="full_wrapper">
-          <p><strong>Gender</strong><br> ${
-            actor["gender"] ? "Female" : "Man"
-          }</p>
-          <p><strong>Known Credits</strong><br> ${actor["birthday"]}</p>  
-          <p><strong>popularity</strong><br> ${actor["popularity"]}</p>        
-        </section>`;
+      <div class="col-8">
+          <strong>
+            <h2>${actor["name"]}</h2>
+          </strong>
+          
+          <strong>
+            <h5>Gender:</h5>
+          </strong>
+          <p>${actor["gender"] === 1 ? "Female" : "Man"}</p>
+          <strong>
+            <h5>Birthday:</h5>
+          </strong>
+          <p>${actor["birthday"]}</p>
+          <h5>popularity</h5>
+          <p>${actor["popularity"]}</p>
+          <strong>
+            <h5>Biography:</h5>
+          </strong>
+          <p>${actor["biography"]}</p>
+      </div>
+    </div>
+        <div>
+        <strong>
+         <h5 class='pl-3'>Known for:</h5>
+        </strong>
+        </div>
+    <div class="movieCreditsParent ">
+        
+      <div  class='movieCredits'>
+      
+      </div>
+    </div>
+  </div>
+      `;
 };
 // Actors single page endss here
-// About us page starts here
-const aboutUsBtn = document.getElementById("aboutUs");
-const openAboutUsPage = () => {
-  CONTAINER.innerHTML = `
-      <div class='container aboutUsContainer d-flex justify-content-center flex-column align-items-center'>
-       <div> 
-         <h2>hi there</h2>
-       </div>
-       <h1>Let's talk about OurMovies</h1>
-       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-       <div classe='advantegesContainer container'> 
-         <div class='row d-flex justify-content-center'>
-           <h2>The TMDB Advantage</h2>
-         </div>
-         <div class='row'>
-           <div>
-             <div class='number'>1</div>
-           </div>
-           <div class='col'>
-             <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-           </div>
-         </div>
-         <div class='row'>
-           <div>
-             <div class='number'>2</div>
-           </div>
-           <div class='col'>
-             <p class='advantegesp'>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-           </div>
-         </div>
-         <div class='row'>
-           <div>
-             <div class='number'>3</div>
-           </div>
-           <div class='col'>
-             <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-           </div>
-         </div>
-       </div>`;
-};
-aboutUsBtn.addEventListener("click", openAboutUsPage);
-// About us page endss here
-// Search box starts here
-const searchBox = document.getElementById("searchBox");
-const searchBtn = document.getElementById("searchBtn");
 
-const searching = async (event) => {
-  event.preventDefault();
-  let searchBoxValue = searchBox.value;
-  let fechedMoviesobj = await fetchMovies(); // this is like a main object it has keys and some of the keys has array.
-  let moviesArr = fechedMoviesobj.results; // shows the result part of our main object and it is an array of objects each object has movie info
-  for (let i = 0; i < moviesArr.length; i++) {
-    if (
-      searchBoxValue.toLowerCase() ==
-      moviesArr[i]["original_title"].toLowerCase()
-    ) {
-      renderMovie(moviesArr[i]);
-      movieDetails(moviesArr[i]);
-      break;
-    } else if (
-      searchBoxValue.toLowerCase() !==
-      moviesArr[i]["original_title"].toLowerCase()
-    ) {
-      CONTAINER.innerHTML = "we couldn find what you are looking for";
-    }
-  }
-};
-searchBtn.addEventListener("click", searching);
-// Search box ends here
+
+
+
 //HomePage starts here
 const homePageBtn = document.getElementById("homePage");
 const homePage = async () => {
@@ -555,5 +448,178 @@ const homePage = async () => {
   renderMovies(moviesarray);
 };
 homePageBtn.addEventListener("click", homePage);
+
 //HomePage endss here
-//mayce's code ends here
+const actorsBtn = document.getElementById("actors");
+const fetchActors = async () => {
+  const url = constructUrl("person/popular"); //person/{person_id} //movie/now_playing
+  const res = await fetch(url);
+  return res.json(); // shows a lsit of popular people
+};
+
+//==================rendering Actors===================
+const renderingActors = (actor1) => {
+  onlyeOnce=false;
+//============
+actor1.map((actor) => {
+  const actorCardsDiv = document.createElement("div");
+    let knFor=" "  
+  if(typeof(actor.known_for[0].original_title) === "undefined" ){
+        knFor ="there is no data";
+    } 
+    else{
+      knFor=actor.known_for[0].original_title +actor.known_for[1].original_title
+    }
+  actorCardsDiv.innerHTML += `
+    
+    <div class="row mb-5 actorCards">
+      <div class="col ree">
+        <div class="cardd    " >
+          <img class="card-img-top" src="${
+            actor.profile_path
+              ? BACKDROP_BASE_URL + actor.profile_path
+              : "https://via.placeholder.com/350"
+          }" alt="Card image cap" style="width: 15rem;height:15rem">
+          <p class="text-dark mb-0 pl-2 ">
+            <a><strong>${
+              actor["name"].length >= 25
+                ? actor["name"].slice(0, 20) + "..."
+                : actor["name"]
+            }</strong></a>
+          </p>
+          <p class="card-text pl-2 text-muted">${knFor.slice(0,50)}...</p>
+        </div>
+      
+      </div>`;
+      actorCardsDiv.addEventListener("click", () => {
+      actorDetails(actor)
+    });      
+    console.log("u")
+    CONTAINER.append(actorCardsDiv); // i midoified here
+
+   
+});  
+
+
+};
+const addingActors = async () => {
+  let fetchedActorObj = await fetchActors();
+  let actorsList = fetchedActorObj.results;
+  CONTAINER.innerHTML = "";
+  renderingActors(actorsList)
+  
+};
+actorsBtn.addEventListener("click", addingActors);
+//  Actros list page ends here
+
+
+
+//==========
+// Search box starts here
+const searchBox = document.getElementById("searchBox");
+const searchBtn = document.getElementById("searchBtn");
+const searchUrl = (search) => {
+  return `${TMDB_BASE_URL}/search/multi?api_key=${atob(
+    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI="
+  )}&query=${search}`;
+};
+const searchRes = async (value) => {
+  const url = searchUrl(value);
+  const res = await fetch(url);
+  const data = await res.json();
+  console.log(data);
+  console.log(data.results);
+  return data.results;
+};
+const searching = async (event) => {
+  event.preventDefault();
+  const results = await searchRes(searchBox.value);
+  console.log(results);
+  CONTAINER.innerHTML = " ";
+  if (results.length !== 0) {
+    renderMovies(results);
+  } else {
+    CONTAINER.innerHTML = `
+      <div class='notFoundMsgContainer'>
+        There are no movies that matched your query.
+      </div>
+    `;
+  }
+};
+searchBtn.addEventListener("click", searching);
+// Search box ends here
+
+
+
+////=================== About Us Code===================
+
+// About us page starts here
+const aboutUsBtn = document.getElementById("aboutUs");
+
+const openAboutUsPage = () => {
+  onlyeOnce=false;
+  CONTAINER.innerHTML = " ";
+  CONTAINER.innerHTML = `
+  <div class='container aboutUsContainer d-flex justify-content-center flex-column align-items-center'>
+    <div class='undrawContainer'>
+      <h2 class="hithereh2">Hi there,</h2>
+    </div>
+    <div>
+      <h1>Let's talk about OurMovies</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+    <div classe='advantegesContainer container'>
+      <div class='row d-flex justify-content-center pb-2 '>
+        <h2>The ourMovies Advantage</h2>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 numbersAboutus">
+          1
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 numbersAboutus">
+          2
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 numbersAboutus">
+          3
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+};
+aboutUsBtn.addEventListener("click", openAboutUsPage);
+// About us page endss here
+
+//===================About Us End Here===================
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("load", autorun());
