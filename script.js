@@ -86,7 +86,7 @@ const renderMovies = (movies) => {
           </div>
           `;
 
-              movieDiv.addEventListener("click", () => {          
+          movieDiv.addEventListener("click", () => {          
           movieDetails(movie);
         });         
           if(movies.length===5){
@@ -227,7 +227,6 @@ document.addEventListener('scroll', () => {
       console.log('hello1')
     })();
   }
-   
 });
 
 async function dd(){
@@ -292,6 +291,8 @@ let nameAr=[];
   }
 }
 
+
+//======================= Animation flipCard ===================
 let angle = 0;
 let index=0;
 function galleryspin(sign) { 
@@ -305,8 +306,9 @@ function galleryspin(sign) {
 if (!sign) { angle = angle+45 ; } else { angle = angle - 45;}
 spinner.setAttribute("style","-webkit-transform: rotateY("+ angle +"deg); -moz-transform: rotateY("+ 0 +"deg); transform: rotateY("+ angle +"deg);");
 }
+//=======================End Animation flipCard ===================
 
-//================================================
+
 
 const Moviefilter = async (type) => {
   const movie = await fetchMoviesfilter(type);
@@ -316,9 +318,8 @@ const Moviefilter = async (type) => {
   renderMovies(movie.results);
 };
 
-// =============================New Codes
 
-// Actors single page starts here
+// =================Actors single page starts here===================
 const actorDetails = async (actor) => {
   const actorRes = await fetchActor(actor.id);
   const creditsresult = await fetchCredits(actor.id);
@@ -339,6 +340,8 @@ const fetchCredits = async (personId) => {
 const render = (creditsresult) => {
   renderActorMovie(creditsresult.cast.slice(0,5)); 
 };
+// =================End Actors single page starts here===================
+
 
 
 const renderActorMovie = (movies) => {
@@ -348,7 +351,7 @@ const renderActorMovie = (movies) => {
     const div=document.createElement('div')
     console.log(movie)
     console.log("i")
-        div.innerHTML = `
+     div.innerHTML = `
         <div class="card1 ">
             <div class="front front1">
           <img class="smallPosterimg1 " style="border-radius: 25px;" src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
@@ -370,23 +373,19 @@ const renderActorMovie = (movies) => {
               <div>Lang<br>${movie.original_language}</div>
               <div>Vote Count<br>${movie.vote_count}</div>
             </div>
-          </div>
-          
+          </div> 
           </div>
           `;
         movieCredits.append(div)
-
         movieCredits.addEventListener("click", () => {  
          movieDetails(movie);
-        });         
-       
-       
+        });           
     });    
   
 };
 
 
-
+  // continer.classlis
 
 
 const renderActor = (actor) => {
@@ -492,10 +491,8 @@ actor1.map((actor) => {
         </div>
       
       </div>`;
-
       actorCardsDiv.addEventListener("click", () => {
-        actorDetails(actor)
-        
+      actorDetails(actor)
     });      
     console.log("u")
     CONTAINER.append(actorCardsDiv); // i midoified here
@@ -554,7 +551,67 @@ searchBtn.addEventListener("click", searching);
 
 
 
+////=================== About Us Code===================
 
+// About us page starts here
+const aboutUsBtn = document.getElementById("aboutUs");
+
+const openAboutUsPage = () => {
+  onlyeOnce=false;
+  CONTAINER.innerHTML = " ";
+  CONTAINER.innerHTML = `
+  <div class='container aboutUsContainer d-flex justify-content-center flex-column align-items-center'>
+    <div class='undrawContainer'>
+      <h2 class="hithereh2">Hi there,</h2>
+    </div>
+    <div>
+      <h1>Let's talk about OurMovies</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+    <div classe='advantegesContainer container'>
+      <div class='row d-flex justify-content-center pb-2 '>
+        <h2>The ourMovies Advantage</h2>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 numbersAboutus">
+          1
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 numbersAboutus">
+          2
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-1 pr-0 numbersAboutus">
+          3
+        </div>
+        <div class='col-11 pl-0'>
+          <p class='advantegesp'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+};
+aboutUsBtn.addEventListener("click", openAboutUsPage);
+// About us page endss here
+
+//===================About Us End Here===================
 
 
 
