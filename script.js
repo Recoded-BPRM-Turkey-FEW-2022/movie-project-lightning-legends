@@ -42,24 +42,19 @@ const fetchMovie = async (movieId) => {
 
 // You'll need to play with this function in order to add features and enhance the style.
 const renderMovies = (movies) => {
-  let divIndex = 0;
   movies.map((movie) => {
     const movieDiv = document.createElement("div");
-    movieDiv.setAttribute("class", `${divIndex}`);
-    divIndex++;
     movieDiv.innerHTML = `
-          <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
+        <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
       movie.title
     } poster">
-          <h3>${movie.title}</h3>`;
+        <h3>${movie.title}</h3>`;
     movieDiv.addEventListener("click", () => {
       movieDetails(movie);
     });
     CONTAINER.appendChild(movieDiv);
-    onlyeOnce = true;
   });
 };
-
 // You'll need to play with this function in order to add features and enhance the style.
 const renderMovie = (movie) => {
   console.log(movie);
@@ -84,83 +79,6 @@ const renderMovie = (movie) => {
             <ul id="actors" class="list-unstyled"></ul>
     </div>`;
 };
-// movies section Codes
-const ddlists = document.querySelectorAll(".dropdown-item");
-ddlists.forEach((element) => {
-  addEventClick(element);
-});
-
-let gId = "";
-// adding click event to the list's tags
-function addEventClick(element) {
-  element.addEventListener("click", async () => {
-    const res = await getMoviesGeners();
-    // getting the Id genre of the pressed tag
-    res.forEach(async (elementGenre) => {
-      if (elementGenre.name === element.innerHTML) {
-        const results = await fetchMoviesSimilar(elementGenre.id);
-        CONTAINER.innerHTML = " ";
-        renderMovies(results.results);
-        gId = elementGenre.id;
-        console.log(gId);
-        console.log(results.results);
-      }
-    });
-  });
-}
-// ==============================
-// This function is to fetch Genres
-const fetchMoviesGenre = async () => {
-  const urlMoviesList = constructUrl(`genre/movie/list`);
-  const resMoviesList = await fetch(urlMoviesList);
-  return resMoviesList.json();
-};
-
-// this function get movies depend on the genere
-const getMoviesGeners = async () => {
-  const res = await fetchMoviesGenre();
-  return res.genres;
-};
-
-// This function is to fetch simirlar Movie depend on the Id
-const fetchMoviesSimilar = async (genreId) => {
-  const url = constructUrl(`movie/${genreId}/similar`);
-  const res = await fetch(url);
-  return res.json();
-};
-
-//==================
-const fetchMoviesSimilarNewPAge = async (genreId, pageNumber) => {
-  const url = constructUrlNewPage(`movie/${genreId}/similar`, pageNumber);
-  console.log(url);
-  const res = await fetch(url);
-  return res.json();
-};
-
-const constructUrlNewPage = (path, pageNumber) => {
-  return `${TMDB_BASE_URL}/${path}?api_key=${atob(
-    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI"
-  )}&page=${pageNumber}
-  )}`;
-};
-
-let x = 1;
-let onlyeOnce = true;
-// event when reaching the bootom
-document.addEventListener("scroll", () => {
-  if (
-    window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 1 &&
-    onlyeOnce
-  ) {
-    x++;
-    onlyeOnce = false;
-    // console.log(fetchMoviesSimilarNewPAge(gId,2))
-    (async () => {
-      const v = await fetchMoviesSimilarNewPAge(gId, x);
-      renderMovies(v.results);
-    })();
-  }
-});
 //mayce's code starts here
 document.addEventListener("DOMContentLoaded", autorun);
 // Actros list page starts here
